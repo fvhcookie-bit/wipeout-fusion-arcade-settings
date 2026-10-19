@@ -1,11 +1,12 @@
 # WipEout Fusion — Arcade Race Settings (PCSX2 patch)
 
-A PCSX2 patch for **WipEout Fusion (PAL, SCES-50005)** that gives single-player **Arcade** its own race
+A PCSX2 patch for **WipEout Fusion** (PAL and NTSC-U) that gives single-player **Arcade** its own race
 set-up screen. Pick the number of laps, fill the grid with up to 16 ships, set shields, make the CPU ships
 stronger than yours, and decide what happens to destroyed opponents: they drop out, respawn, or stay on the
 track as wrecks.
 
-The same file also contains an optional fix for the slowdown PCSX2 has on the 3D **FINAL LAP** text.
+The same files also contain optional extras: skipping the intro movies, and a fix for the 3D **FINAL LAP**
+text on older PCSX2 versions.
 
 *Краткая инструкция на русском — [README.ru.md](README.ru.md).*
 
@@ -28,24 +29,38 @@ After you choose your ship in **Arcade**, a **race set-up** screen opens before 
 Press ✕ to accept and go on to track selection, △ to go back to ship selection.
 All other modes (League, Time Trial, Challenges, Zone, two-player) are unchanged.
 
-## Requirements
+## Supported versions
 
-- **PCSX2 2.x** (tested with 2.8). Other emulators and real hardware have not been tested, so it is not
-  guaranteed to work there.
-- **PAL** WipEout Fusion, serial **SCES-50005**, CRC **90DB90F1**. Other releases (such as the NTSC version)
-  are separate builds; the patch has not been tested with them and is not guaranteed to work.
+| Release | Serial | CRC | Patch file |
+|---|---|---|---|
+| PAL (Europe) | SCES-50005 | 90DB90F1 | `patches/90DB90F1.pnach` |
+| NTSC-U (USA) | SLUS-20462 | 4C2D1E6D | `patches/4C2D1E6D.pnach` |
+
+Both were tested in **PCSX2 2.8**. The NTSC-U patch also works together with PCSX2's built-in *Widescreen 16:9*
+and *No-Interlacing* patches for that release. Other emulators, real hardware and other releases have not been
+tested, so the patch is not guaranteed to work there.
 
 ## Installation
 
-1. Download `patches/90DB90F1.pnach` (or the release archive).
+1. Download the release archive and take the `.pnach` file for your release (see the table above).
 2. Put it into the PCSX2 **patches** folder. In PCSX2 2.x it is `Documents\PCSX2\patches` by default
    (*Settings → Folders* shows the exact path).
-   - If you already have a `90DB90F1.pnach` there, append the sections from this file to it instead of
+   - If a file with the same name is already there, append the sections from this file to it instead of
      replacing it.
 3. Start PCSX2, right-click the game in the list → **Properties → Patches**, and tick
-   **Arcade race settings**. The three **FINAL LAP fix** entries are optional and independent.
+   **Arcade race settings**. The other entries are optional and independent.
 4. **Restart the game** after enabling or disabling the patch. The new screen is set up when the game
    boots, so toggling the patch mid-game is not enough.
+
+## Optional extras
+
+- **Skip intro movies** — skips the two logo movies when the game boots. The movie that plays in the menu when
+  you leave the game idle is kept.
+- **FINAL LAP fix: 1 echo layer instead of 5** — older PCSX2 versions slow down while the 3D race messages
+  (FINAL LAP, lap times, records) are on screen: the game draws every letter pixel as a translucent cube,
+  five echo layers deep. This draws one layer; the text still animates. **Not needed with PCSX2 2.8**, where
+  these messages run at full speed with both Vulkan and Direct3D 12.
+- **FINAL LAP fix: no FINAL LAP text** — removes that message completely. The announcer still says it.
 
 ## Notes and known limitations
 
@@ -58,22 +73,15 @@ All other modes (League, Time Trial, Challenges, Zone, two-player) are unchanged
 - Ship models follow the race class: with a higher **upgrade level** every ship, yours included, uses the
   model of that class. Your ship's handling still comes from your own upgrades.
 - In Arcade the two-player screen's *shield energy player 2* value follows the CPU shield value.
-
-## FINAL LAP fix
-
-PCSX2 slows down when the 3D race messages (FINAL LAP, lap times, records) are on screen. The game draws every
-letter pixel as a separate translucent cube, five echo layers deep.
-
-- **1 echo layer instead of 5**: recommended, removes the slowdown. The text still animates; only the trail
-  is gone.
-- **brightest layer alpha 192 → 128**: optional experiment that helps some renderers; messages get dimmer.
-- **no FINAL LAP text**: removes that message completely. The announcer still says it.
+- The attract-mode demo races in the menu are built from the same settings (number of ships, laps and so on).
 
 ## For modders
 
-`tools/arcade_mod.py` generates the patch. `python arcade_mod.py pnach` prints it, and with the PINE
+`tools/arcade_mod.py` generates the PAL patch: `python arcade_mod.py pnach` prints it, and with the PINE
 interface enabled in PCSX2 `python arcade_mod.py live` can poke parts of it into a running game. The comments
 in the script explain every hook. Code caves live in the unused EE RAM range `0x000C0000–0x000FFFFF`.
+The NTSC-U patch is the same code relocated to that build: every hook and data address was found by matching
+the surrounding code, and the original instructions at each hook were checked to be identical.
 
 This mod is a by-product of **ReFusion**, a reverse-engineering project for WipEout Fusion.
 
