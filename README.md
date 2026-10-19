@@ -30,9 +30,10 @@ All other modes (League, Time Trial, Challenges, Zone, two-player) are unchanged
 
 ## Requirements
 
-- **PCSX2 2.x** (tested with 2.8). Other emulators and real hardware are not supported.
-- **PAL** WipEout Fusion, serial **SCES-50005**, CRC **90DB90F1**. The NTSC versions are different
-  builds and will not work.
+- **PCSX2 2.x** (tested with 2.8). Other emulators and real hardware have not been tested, so it is not
+  guaranteed to work there.
+- **PAL** WipEout Fusion, serial **SCES-50005**, CRC **90DB90F1**. Other releases (such as the NTSC version)
+  are separate builds; the patch has not been tested with them and is not guaranteed to work.
 
 ## Installation
 
@@ -56,8 +57,6 @@ All other modes (League, Time Trial, Challenges, Zone, two-player) are unchanged
   *shield energy player*) are in English whatever the game language is.
 - Ship models follow the race class: with a higher **upgrade level** every ship, yours included, uses the
   model of that class. Your ship's handling still comes from your own upgrades.
-- Wrecks never move, so you will lap them. The game's usual rule then takes a ship that is a full lap behind
-  out of the race, and the opponent counter goes down. The wreck stays on the track and is still solid.
 - In Arcade the two-player screen's *shield energy player 2* value follows the CPU shield value.
 
 ## FINAL LAP fix
